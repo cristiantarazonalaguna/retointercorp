@@ -2,6 +2,7 @@ package com.intercorp.reto.app.service;
 
 import com.intercorp.reto.app.models.Report;
 import com.intercorp.reto.app.models.User;
+import io.reactivex.Observable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -9,12 +10,9 @@ import java.util.List;
 @Repository
 public interface UserService {
 
-    public List<User> listUsers();
-    public User getUserById(Long id);
+    public Observable<List<User>> listUsers();
 
-    public User save(User user);
-    public User update(User user);
-    public void deleteUserById(Long id);
+    public Observable<User> save(User user);
 
-    public Report kpiColaboradores();
+    public Observable<Report> kpiColaboradores();
 }

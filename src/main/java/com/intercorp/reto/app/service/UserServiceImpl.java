@@ -4,6 +4,7 @@ import com.intercorp.reto.app.Util.GenericUtil;
 import com.intercorp.reto.app.models.Report;
 import com.intercorp.reto.app.models.User;
 import com.intercorp.reto.app.repository.UserRepository;
+import io.reactivex.Observable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,41 +20,29 @@ public class UserServiceImpl implements UserService{
     private UserRepository userRepository;
 
     @Override
-    public List<User> listUsers() {
+    public Observable<List<User>> listUsers() {
         Iterable<User> iterable = userRepository.findAll();
         List<User> users = new ArrayList<>();
         iterable.forEach(x->users.add(x));
-        return  users;
+        return  Observable.just(users);
     }
 
-    @Override
-    public User getUserById(Long id) {
-        return userRepository.findById(id).get();
-    }
+
 
     @Override
     @Transactional
-    public User save(User user) {
+    public Observable<User> save(User user) {
         User user1 = GenericUtil.calcularFecheMuerte(user);
-        return userRepository.save(user1);
+        return Observable.just(userRepository.save(user1));
     }
 
-    @Override
-    public User update(User user) {
-        return userRepository.save(user);
-    }
 
     @Override
-    public void deleteUserById(Long id) {
-      userRepository.deleteById(id);
-    }
-
-    @Override
-    public Report kpiColaboradores() {
+    public Observable<Report> kpiColaboradores() {
 
         Iterable<User> iterable = userRepository.findAll();
         Report rep = GenericUtil.calculateReport(iterable);
 
-        return rep;
+        return Observable.just(rep);
     }
 }

@@ -5,11 +5,13 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
+
 import javax.persistence.*;
 
+
+@ApiModel("Model Report")
 @Getter
 @Setter
-@ApiModel("Model Report")
 public class Report {
 
     @ApiModelProperty(
@@ -23,4 +25,5 @@ public class Report {
             example = "1,87",
             position = 3)
     private Double desviacion;
+
 }

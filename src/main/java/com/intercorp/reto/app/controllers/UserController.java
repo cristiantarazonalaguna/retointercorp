@@ -3,6 +3,7 @@ package com.intercorp.reto.app.controllers;
 import com.intercorp.reto.app.models.Report;
 import com.intercorp.reto.app.models.User;
 import com.intercorp.reto.app.service.UserService;
+import io.reactivex.Observable;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import jdk.dynalink.linker.LinkerServices;
@@ -25,7 +26,7 @@ public class UserController {
             value = "Da de alta a un colaborador",
             notes = "Devuelve el usuarios registardo"
     )
-    public User altaColaborador(@RequestBody User user){
+    public Observable<User> altaColaborador(@RequestBody User user){
 
         return userService.save(user);
     }
@@ -36,13 +37,9 @@ public class UserController {
             notes = "Devuelve todos los registros de colaboradores"
 
     )
-    public List<User> listaColaboradores(){
-        userService.listUsers().forEach(x->{
-            System.out.println("userService.listUsers() = " + x.getLastName());
-        });
-        List<User> users = userService.listUsers();
+    public Observable<List<User>> listaColaboradores(){
 
-
+        Observable<List<User>> users = userService.listUsers();
 
         return users;
     }
@@ -50,7 +47,7 @@ public class UserController {
     @GetMapping("/kpicolaboradores")
     @ApiOperation(value = "Lista el kpi de los clientes",
     notes = "Devuelve el listado de los clientes por KPi")
-    public Report kpiColaboradores(){
+    public Observable<Report> kpiColaboradores(){
         return userService.kpiColaboradores();
     }
 }

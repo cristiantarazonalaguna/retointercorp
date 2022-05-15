@@ -2,18 +2,17 @@ package com.intercorp.reto.app.models;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
+
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 @Table(name = "users")
-@Builder
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
 @ApiModel("Model User")
 public class User {
     @Id
@@ -29,6 +28,7 @@ public class User {
             position = 2,
             example = "Juan")
     private String name;
+
 
     @Column(name = "last_name")
     @ApiModelProperty(
