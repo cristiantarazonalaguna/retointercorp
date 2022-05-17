@@ -1,8 +1,9 @@
 package com.intercorp.reto.app.repository;
 
-import com.intercorp.reto.app.models.User;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.intercorp.reto.app.entity.UserEntity;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
-public interface UserRepository extends CrudRepository<User,Long> {
+@Repository
+public interface UserRepository extends CrudRepository<UserEntity,Long> {
 }

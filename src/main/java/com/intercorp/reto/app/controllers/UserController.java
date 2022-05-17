@@ -4,16 +4,16 @@ import com.intercorp.reto.app.models.Report;
 import com.intercorp.reto.app.models.User;
 import com.intercorp.reto.app.service.UserService;
 import io.reactivex.Observable;
+import io.reactivex.Single;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import jdk.dynalink.linker.LinkerServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = {"*"})
+@CrossOrigin(origins = "*")
 @RequestMapping("/api")
 @Api(tags = {"API de usuarios"})
 public class UserController {
@@ -26,28 +26,27 @@ public class UserController {
             value = "Da de alta a un colaborador",
             notes = "Devuelve el usuarios registardo"
     )
-    public Observable<User> altaColaborador(@RequestBody User user){
+    public Single<User> altaColaborador(@RequestBody User user){
 
         return userService.save(user);
     }
 
-    @GetMapping("/listColaboradores")
+    @GetMapping("/listaColaboradores")
+    @CrossOrigin(origins = "*")
     @ApiOperation(
             value = "Lista todos los colaboradores",
             notes = "Devuelve todos los registros de colaboradores"
 
     )
-    public Observable<List<User>> listaColaboradores(){
+    public Single<List<User>> listaColaboradores(){
 
-        Observable<List<User>> users = userService.listUsers();
-
-        return users;
+        return userService.listUsers();
     }
 
     @GetMapping("/kpicolaboradores")
     @ApiOperation(value = "Lista el kpi de los clientes",
     notes = "Devuelve el listado de los clientes por KPi")
-    public Observable<Report> kpiColaboradores(){
+    public Single<Report> kpiColaboradores(){
         return userService.kpiColaboradores();
     }
 }

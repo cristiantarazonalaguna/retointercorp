@@ -1,18 +1,25 @@
-package com.intercorp.reto.app.models;
+package com.intercorp.reto.app.entity;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+
+import javax.persistence.*;
 import java.util.Date;
-@ApiModel("User")
+
+@Entity
+@Table(name = "users")
 @Getter
 @Setter
-public class User {
+public class UserEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @ApiModelProperty(
+            value = "Id del cliente" ,
+            position = 1,
+            example = "1")
     private Long id;
 
     @ApiModelProperty(
@@ -35,16 +42,18 @@ public class User {
             example = "20")
     private int age;
 
+    @Column(name = "date_born")
     @ApiModelProperty(
             value = "Fecha de nacimiento del cliente del cliente" ,
             position = 5,
             example = "1994-09-12")
     private Date dateBorn;
 
+    @Column(name = "fechamuerte")
     @ApiModelProperty(
             value = "fecha de muerte del cliente" ,
             position = 4,
             example = "2029-09-01")
+    @Temporal(TemporalType.DATE)
     private Date dateDie;
-
 }

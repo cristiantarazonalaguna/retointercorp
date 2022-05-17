@@ -1,5 +1,7 @@
 package com.intercorp.reto.app.Util;
 
+import com.intercorp.reto.app.entity.UserEntity;
+import com.intercorp.reto.app.mapper.UserMapper;
 import com.intercorp.reto.app.models.Report;
 import com.intercorp.reto.app.models.User;
 
@@ -24,14 +26,14 @@ public class GenericUtil {
     }
 
 
-    public static Report calculateReport(Iterable<User> iterable){
+    public static Report calculateReport(Iterable<UserEntity> iterable, UserMapper mapper){
 
         Integer promedio;
         Double desviacion;
 
         Report report = new Report();
         List<User> users = new ArrayList<>();
-        iterable.forEach(x->users.add(x));
+        iterable.forEach(x->users.add(mapper.toModel(x)));
 
 
         promedio = calcularPromedio(users);

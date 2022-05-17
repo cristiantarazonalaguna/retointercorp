@@ -1,10 +1,13 @@
 package com.intercorp.reto.app.service;
 
 import com.intercorp.reto.app.Util.GenericUtil;
+import com.intercorp.reto.app.mapper.UserMapper;
+import com.intercorp.reto.app.entity.UserEntity;
 import com.intercorp.reto.app.models.Report;
 import com.intercorp.reto.app.models.User;
 import com.intercorp.reto.app.repository.UserRepository;
 import io.reactivex.Observable;
+import io.reactivex.Single;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,31 +21,35 @@ public class UserServiceImpl implements UserService{
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private UserMapper userMapper;
 
     @Override
-    public Observable<List<User>> listUsers() {
-        Iterable<User> iterable = userRepository.findAll();
+    public Single<List<User>> listUsers() {
+        Iterable<UserEntity> iterable = userRepository.findAll();
         List<User> users = new ArrayList<>();
-        iterable.forEach(x->users.add(x));
-        return  Observable.just(users);
+        iterable.forEach(x->users.add(userMapper.toModel(x)));
+        return  Single.just(users);
     }
 
 
 
     @Override
     @Transactional
-    public Observable<User> save(User user) {
+    public Single<User> save(User user) {
         User user1 = GenericUtil.calcularFecheMuerte(user);
-        return Observable.just(userRepository.save(user1));
+
+        return Single.just(userMapper.toModel(userRepository.save(userMapper.toEntity(user1))));
     }
 
 
     @Override
-    public Observable<Report> kpiColaboradores() {
+    public Single<Report> kpiColaboradores() {
 
-        Iterable<User> iterable = userRepository.findAll();
-        Report rep = GenericUtil.calculateReport(iterable);
+        Iterable<UserEntity> iterable = userRepository.findAll();
 
-        return Observable.just(rep);
+        Report rep = GenericUtil.calculateReport(iterable,userMapper);
+
+        return Single.just(rep);
     }
 }

@@ -9,7 +9,7 @@ import lombok.Setter;
 import javax.persistence.*;
 
 
-@ApiModel("Model Report")
+@ApiModel("Report")
 @Getter
 @Setter
 public class Report {
