@@ -4,11 +4,13 @@ import com.intercorp.reto.app.models.Report;
 import com.intercorp.reto.app.models.User;
 import io.reactivex.Observable;
 import io.reactivex.Single;
+import org.mapstruct.Mapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
+
 public interface UserService {
 
     public Single<List<User>> listUsers();

@@ -1,7 +1,6 @@
 package com.intercorp.reto.app.entity;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,43 +15,37 @@ import java.util.Date;
 public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @ApiModelProperty(
-            value = "Id del cliente" ,
-            position = 1,
+    @Schema(
+            description = "Id del cliente" ,
             example = "1")
     private Long id;
 
-    @ApiModelProperty(
-            value = "Nombre del cliente" ,
-            position = 2,
+    @Schema(
+            description = "Nombre del cliente" ,
             example = "Juan")
     private String name;
 
 
     @Column(name = "last_name")
-    @ApiModelProperty(
-            value = "Apellido del cliente" ,
-            position = 3,
+    @Schema(
+            description = "Apellido del cliente",
             example = "Perez")
     private String lastName;
 
-    @ApiModelProperty(
-            value = "Edad del cliente" ,
-            position = 4,
+    @Schema(
+            description = "Edad del cliente" ,
             example = "20")
     private int age;
 
     @Column(name = "date_born")
-    @ApiModelProperty(
-            value = "Fecha de nacimiento del cliente del cliente" ,
-            position = 5,
+    @Schema(
+            description = "Fecha de nacimiento del cliente del cliente" ,
             example = "1994-09-12")
     private Date dateBorn;
 
     @Column(name = "fechamuerte")
-    @ApiModelProperty(
-            value = "fecha de muerte del cliente" ,
-            position = 4,
+    @Schema(
+            description = "fecha de muerte del cliente" ,
             example = "2029-09-01")
     @Temporal(TemporalType.DATE)
     private Date dateDie;

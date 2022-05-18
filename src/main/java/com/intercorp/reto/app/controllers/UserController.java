@@ -5,8 +5,14 @@ import com.intercorp.reto.app.models.User;
 import com.intercorp.reto.app.service.UserService;
 import io.reactivex.Observable;
 import io.reactivex.Single;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,37 +21,51 @@ import java.util.List;
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/api")
-@Api(tags = {"API de usuarios"})
+@Tag(name = "API de usuarios")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
     @PostMapping("/altacolaborador")
-    @ApiOperation(
-            value = "Da de alta a un colaborador",
-            notes = "Devuelve el usuarios registardo"
-    )
-    public Single<User> altaColaborador(@RequestBody User user){
+    @Operation(summary = "Dar de alta colaborador")
+    @ApiResponses( value = {
+            @ApiResponse(responseCode = "200", description = "Consulta exitosa",
+            content ={@Content(mediaType = "application/json",
+            schema = @Schema(implementation = User.class))}),
+            @ApiResponse(responseCode = "400", description = "Error en la consulta",content = @Content),
+            @ApiResponse(responseCode = "404", description = "Recurso no encontrado",
+            content = @Content)})
+    public Single<User> altaColaborador(
+            @RequestBody User user){
 
         return userService.save(user);
     }
 
     @GetMapping("/listaColaboradores")
+    @Operation(summary = "Lista colaboradores")
+    @ApiResponses( value = {
+            @ApiResponse(responseCode = "200", description = "Consulta exitosa",
+                    content ={@Content(mediaType = "application/json",
+                            array = @ArraySchema(schema =@Schema(implementation = User.class)))}),
+            @ApiResponse(responseCode = "400", description = "Error en la consulta",content = @Content),
+            @ApiResponse(responseCode = "404", description = "Recurso no encontrado",
+                    content = @Content)})
     @CrossOrigin(origins = "*")
-    @ApiOperation(
-            value = "Lista todos los colaboradores",
-            notes = "Devuelve todos los registros de colaboradores"
-
-    )
     public Single<List<User>> listaColaboradores(){
 
         return userService.listUsers();
     }
 
     @GetMapping("/kpicolaboradores")
-    @ApiOperation(value = "Lista el kpi de los clientes",
-    notes = "Devuelve el listado de los clientes por KPi")
+    @Operation(summary = "Devuelve el kpi")
+    @ApiResponses( value = {
+            @ApiResponse(responseCode = "200", description = "Consulta exitosa",
+                    content ={@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = Report.class))}),
+            @ApiResponse(responseCode = "400", description = "Error en la consulta",content = @Content),
+            @ApiResponse(responseCode = "404", description = "Recurso no encontrado",
+                    content = @Content)})
     public Single<Report> kpiColaboradores(){
         return userService.kpiColaboradores();
     }

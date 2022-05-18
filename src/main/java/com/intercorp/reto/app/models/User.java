@@ -1,7 +1,6 @@
 package com.intercorp.reto.app.models;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,41 +8,36 @@ import javax.persistence.Column;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.util.Date;
-@ApiModel("User")
+
 @Getter
 @Setter
 public class User {
     private Long id;
 
-    @ApiModelProperty(
-            value = "Nombre del cliente" ,
-            position = 2,
+    @Schema(
+            description = "Nombre del cliente" ,
             example = "Juan")
     private String name;
 
 
     @Column(name = "last_name")
-    @ApiModelProperty(
-            value = "Apellido del cliente" ,
-            position = 3,
+    @Schema(
+            description = "Apellido del cliente" ,
             example = "Perez")
     private String lastName;
 
-    @ApiModelProperty(
-            value = "Edad del cliente" ,
-            position = 4,
+    @Schema(
+            description = "Edad del cliente" ,
             example = "20")
     private int age;
 
-    @ApiModelProperty(
-            value = "Fecha de nacimiento del cliente del cliente" ,
-            position = 5,
+    @Schema(
+            description = "Fecha de nacimiento del cliente del cliente" ,
             example = "1994-09-12")
     private Date dateBorn;
 
-    @ApiModelProperty(
-            value = "fecha de muerte del cliente" ,
-            position = 4,
+    @Schema(
+            description = "fecha de muerte del cliente" ,
             example = "2029-09-01")
     private Date dateDie;
 

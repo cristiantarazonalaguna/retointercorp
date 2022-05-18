@@ -1,7 +1,6 @@
 package com.intercorp.reto.app.models;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,21 +8,18 @@ import lombok.Setter;
 import javax.persistence.*;
 
 
-@ApiModel("Report")
 @Getter
 @Setter
 public class Report {
 
-    @ApiModelProperty(
-            value = "Promedio de las edades del usuario",
-            example = "3",
-            position = 1)
+    @Schema(
+            description = "Promedio de las edades del usuario",
+            example = "3")
     private Integer promedio;
 
-    @ApiModelProperty(
-            value = "Desviacion standar de las edades de los usuario",
-            example = "1,87",
-            position = 3)
+    @Schema(
+            description = "Desviacion standar de las edades de los usuario",
+            example = "1,87")
     private Double desviacion;
 
 }
