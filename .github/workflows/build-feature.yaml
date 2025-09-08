@@ -1,0 +1,23 @@
+name: Build and Deploy Feature Branch
+on:
+  push:
+    branches:
+      - 'feature/*'
+jobs:
+  build-feature:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: pull and checkhout git repository
+        run: |
+          echo "Pulling latest changes from remote repository"
+      - name: Set Up Java 17
+      - uses: java-actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'maven'
+      - name: Build with Maven
+        run: |
+          mvn clean install
+          echo "build with maven"
